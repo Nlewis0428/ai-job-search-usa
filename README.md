@@ -1,3 +1,6 @@
+> [!NOTE]
+> **U.S. Edition.** This is a fork of [ai-job-search](https://github.com/ai-job-search-dev/ai-job-search) by **Mads Lorentzen**, adapted for job searching in the United States: a USAJOBS (federal jobs) portal, Windows setup, and U.S. guidance. **Start with [USA-SETUP.md](USA-SETUP.md).** All credit for the framework goes to the original author.
+
 <p align="center">
   <img src="assets/readme/hero.svg" alt="AI Job Search. Pip the courier bird carries an application along a flight path to its destination. The job search that runs on your machine." width="100%">
 </p>
