@@ -5,8 +5,9 @@ export async function runDetail(flags: Flags, fmt: Fmt): Promise<number> {
   if (!raw) return err("detail needs a job id or usajobs.gov/job/<id> URL", "BAD_ARG")
   const m = String(raw).match(/(?:usajobs\.gov\/(?:GetJob\/ViewDetails|job)\/)?(\d{5,})/i)
   if (!m) return err(`could not read a USAJOBS control number from "${raw}"`, "BAD_ARG")
-  const data = await api(new URLSearchParams({ ControlNumber: m[1], ResultsPerPage: "1" }))
-  const item = data?.SearchResult?.SearchResultItems?.[0]
+  // The API ignores ControlNumber (it returns every posting); a Keyword search on the number matches it exactly.
+  const data = await api(new URLSearchParams({ Keyword: m[1], ResultsPerPage: "10" }))
+  const item = (data?.SearchResult?.SearchResultItems ?? []).find((it: any) => String(it?.MatchedObjectId) === m[1] || String(it?.MatchedObjectDescriptor?.PositionURI ?? "").endsWith("/" + m[1]))
   if (!item) return err(`no open USAJOBS posting with control number ${m[1]} (it may have closed)`, "NOT_FOUND")
   const d = item.MatchedObjectDescriptor ?? {}
   const ua = d?.UserArea?.Details ?? {}

@@ -100,7 +100,7 @@ export function toCard(item: any): JobCard {
     grade: ua.LowGrade ? `${d?.JobGrade?.[0]?.Code ?? ""}-${ua.LowGrade}${ua.HighGrade && ua.HighGrade !== ua.LowGrade ? "/" + ua.HighGrade : ""}` : null,
     remote: typeof ua.RemoteIndicator === "boolean" ? ua.RemoteIndicator : null,
     telework: typeof ua.TeleworkEligible === "boolean" ? ua.TeleworkEligible : null,
-    who_may_apply: clean(ua?.WhoMayApply?.Name) || null,
+    who_may_apply: clean(ua?.WhoMayApply?.Name) || clean([ua?.HiringPathDisplay ?? ua?.HiringPath].flat().filter(Boolean).join("; ")) || null,
     url: typeof d.PositionURI === "string" ? d.PositionURI.replace(":443/", "/") : `https://www.usajobs.gov/job/${item?.MatchedObjectId ?? ""}`,
   }
 }
